@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="aws.sample.lambdaweb">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="aws.sample.lambda.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/aws.sample.lambda/aws.sample.lambda">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="aws.sample.lambdaweb"/>
+        <property name="java-output-path" value="/aws.sample.lambdaweb/build/classes"/>
+    </wb-module>
+</project-modules>

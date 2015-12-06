@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/LambdaFunctionHandlerWrapper")
 public class LambdaFunctionHandlerWrapper extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
     
 	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,6 +27,8 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	// TODO: Is all this required?
     	response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");

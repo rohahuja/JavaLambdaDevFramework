@@ -26,4 +26,6 @@ public class Logger {
 		
 		logger.log(message);
 	}
+	
+	// TODO: Implement Dispose to get rid of this at the end of the context?
 }

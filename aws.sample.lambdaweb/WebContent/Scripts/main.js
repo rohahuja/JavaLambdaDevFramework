@@ -25,19 +25,23 @@ function invokeCallback() {
 }
 
 function onBeforeSend() {
-	
+	// Print what time request submitted
+	var $info = $('info');
+	$info.html('<p>Request submitted at: ' + new Date() + '</p>');
 }
 
-function onSuccess() {
+function onSuccess(data) {
 	
 }
 
 function onComplete() {
-	
+	// Print what time response received and Total time
+	var $info = $('info');
+	$info.append('<p>Response received at: ' + new Date() + '</p>');
 }
 
-function onError(info) {
-	console.log("Terminal error: " + info);
-    $('err').html(info);
+function onError(err) {
+	console.log("Terminal error: " + err);
+    $('err').html(err);
 }
 

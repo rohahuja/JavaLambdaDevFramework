@@ -8,13 +8,14 @@ $(document).ready(function () {
 	// would be setting up Cognito to authenticate the request. 
 	// The credentials are passed in using the method below for brevity.
 	var params = {
-        accessKeyId: 'AKIAIFV7VRQE5J4HMBKA',
-        secretAccessKey: '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'
+        accessKeyId: '',
+        secretAccessKey: ''
     };
 
-    // Set the Amazon Cognito region
-    AWS.config.region = 'us-east-1';
-    AWS.config.credentials = new AWS.Credentials(params);
+	AWS.config.credentials = new AWS.Credentials(params);
+	
+    // Set the region your Lambda function has been deplyed to
+    AWS.config.region = '';
 });
 
 function lambdaFunctionCallback(data) {

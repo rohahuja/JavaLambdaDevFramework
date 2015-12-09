@@ -1,42 +1,37 @@
 /**
- * 
+ * This script file contains the function that makes the call to our Java servlet. 
+ * This script file is only required during development to emulate invocation of our Lambda
+ * function. 
  */
 
 function lambdaFunctionCallback(input) {
-    //var dataJson = "json=" + JSON.stringify("{ 'name': '" + input + "' }");
-    var dataJson = 'param=' + input;
-    
-    //make the AJAX request, dataType is set to json
-    //meaning we are expecting JSON data in response from the server
+	var data = 'param=' + input;
+	
+	// TODO: LambdaFunctionHandlerWrapper is the url of the Java Servlet we have defined. 
+	// This can be updated if you also change the @WebServlet directive at the top of the 
+	// LambdaFunctionHandlerWrapper class.
     $.ajax({
         type: "POST",
         url: "LambdaFunctionHandlerWrapper",
-        data: dataJson, 
-        dataType: "text", //"json",
+        data: data, 
+        dataType: "text",
 
-        //if received a response from the server
+        // Stub to do some operation with a successful response
         success: function (data, textStatus, jqXHR) {
         	onSuccess(data);
-        	/*if (data.success) {
-        		onSuccess(data.itemInfo);
-        	} 
-        	else {
-        		onError(data.itemInfo);
-        	}*/
         },
 
-        //If there was no response from the server
+        // Stub to do some operation with an erroneous response
         error: function(jqXHR, textStatus, errorThrown){
-    		onError(textStatus);
+    		onError(errorThrown);
         },
 
-        //capture the request before it was sent to server
+        // Stub to do some operation prior to sending the AJAX request
         beforeSend: function(jqXHR, settings){
         	onBeforeSend();
         },
 
-        //this is called after the response or error functions are finished
-        //so that we can take some action
+        // Stub to do some operation with once the response has been processed
         complete: function(jqXHR, textStatus){
         	onComplete();
         }

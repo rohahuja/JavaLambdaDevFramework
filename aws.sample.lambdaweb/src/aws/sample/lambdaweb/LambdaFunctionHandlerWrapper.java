@@ -1,9 +1,6 @@
 package aws.sample.lambdaweb;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -15,21 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import aws.sample.lambda.*;
 
 /**
- * Servlet implementation class LambdaFunctionHandlerWrapper
+ * Servlet implementation class used pass control between the client-side AJAX call
+ * to the Lambda function.
  */
 @WebServlet("/LambdaFunctionHandlerWrapper")
 public class LambdaFunctionHandlerWrapper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	/**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
@@ -42,19 +31,17 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
+        // Extract parameter passed in by AJAX
         String input = request.getParameter("param");
-        int inputInt = Integer.parseInt(input);
         
         try (PrintWriter out = response.getWriter()) {
-        	/*
-        	InputStream inputStream = new ByteArrayInputStream(input.getBytes());
-        	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        	LambdaFunctionHandler.handler(inputStream, outputStream, null);
-        	
-        	out.println(outputStream.toString());*/
-        	
+        	// Instantiate the Lambda function class
         	LambdaFunctionHandler function = new LambdaFunctionHandler();
-        	String lambdaResponse = function.handleRequest(inputInt, null);
+        	
+        	// Call the function to emulate its execution
+        	String lambdaResponse = function.handleRequest(input, null);
+        	
+        	// Return the response to the AJAX
         	out.println(lambdaResponse);
         }
     }

@@ -7,7 +7,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 /**
- * @author Administrator
+ * The Logger class which will only log to CloudWatch if the Lambda function has been deployed.
  *
  */
 public class Logger {
@@ -20,12 +20,11 @@ public class Logger {
 	}
 	
 	public void write(String message) {
+		// This case would be true when running the Lambda function locally
 		if (logger == null) {
 			return;
 		}
 		
 		logger.log(message);
 	}
-	
-	// TODO: Implement Dispose to get rid of this at the end of the context?
 }

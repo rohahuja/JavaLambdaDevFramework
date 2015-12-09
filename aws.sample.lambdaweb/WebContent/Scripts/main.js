@@ -1,61 +1,56 @@
-var simPrdJsonArr = null;
-var detectShake;
-var $debugDiv;
+/**
+ * This script file contains all functions external the Lambda invocation.
+ */
 
 $(document).ready(function () {
     $debugDiv = $('#debug');
     
-    //Stops the submit request
+    // Stops the submit request
     $("#ajax-request-form").submit(function(e){
         e.preventDefault();
     });
     
+    // Add the event listener to invoke the function on the button
     $('#sample-btn').on('click', invokeCallback);
 });
 
+// Calls the invocation function
 function invokeCallback() {
 	resetAllDivs();
 	
 	var input = $('#sample-textbox').val();
 	
-	if (!isInt(input)) {
-		onError("Please enter an Integer value in the textbox.");
+	if (input.length < 1) {
+		onError("Please enter your name in the textbox.");
 	}
 	else {
-		//var json = createJson(input);
-		//lambdaFunctionCallback(json);
 		lambdaFunctionCallback(input);
 	}
 }
 
-function isInt(value) {
-	return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
-}
-
-/*
-function createJson(input) {
-	var dataJson = '{ "name": "' + input + '" }';
-	return dataJson;
-}*/
-
+// Stub to do some operation with a successful response
 function onBeforeSend() {
-	// Print what time request submitted
+	// Print the time request submitted
 	$('#info').html('<p>Request submitted at: ' + new Date() + '</p>');
 }
 
+// Stub to do some operation prior to sending the AJAX request
 function onSuccess(data) {
 	$('#response').html(data);
 }
 
+// Stub to do some operation with once the response has been processed
 function onComplete() {
-	// Print what time response received and Total time
+	// Print the time response received
 	$('#info').append('<p>Response received at: ' + new Date() + '</p>');
 }
 
+// Stub to do some operation with an erroneous response
 function onError(err) {
     $('#err').html(err);
 }
 
+// The following function is only required by our working sample and can be removed for your purposes.
 function resetAllDivs() {
 	$('#response').html('');
 	$('#info').html('');

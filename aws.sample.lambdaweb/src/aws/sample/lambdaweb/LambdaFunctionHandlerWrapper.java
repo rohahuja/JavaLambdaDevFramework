@@ -1,6 +1,9 @@
 package aws.sample.lambdaweb;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -9,12 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import aws.sample.lambda.*;
+
 /**
  * Servlet implementation class LambdaFunctionHandlerWrapper
  */
 @WebServlet("/LambdaFunctionHandlerWrapper")
 public class LambdaFunctionHandlerWrapper extends HttpServlet {
-	//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
     
 	/**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,7 +33,6 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	// TODO: Is all this required?
     	response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
@@ -38,10 +42,20 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Max-Age", "86400");
         
-        String input = request.getParameter("json");
+        String input = request.getParameter("param");
+        int inputInt = Integer.parseInt(input);
         
         try (PrintWriter out = response.getWriter()) {
+        	/*
+        	InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        	LambdaFunctionHandler.handler(inputStream, outputStream, null);
         	
+        	out.println(outputStream.toString());*/
+        	
+        	LambdaFunctionHandler function = new LambdaFunctionHandler();
+        	String lambdaResponse = function.handleRequest(inputInt, null);
+        	out.println(lambdaResponse);
         }
     }
     
@@ -58,7 +72,7 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
 	}
 
 	/**
@@ -66,7 +80,7 @@ public class LambdaFunctionHandlerWrapper extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		processRequest(request, response);
 	}
 
 }

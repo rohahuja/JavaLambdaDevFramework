@@ -10,38 +10,54 @@ $(document).ready(function () {
         e.preventDefault();
     });
     
-    $('#sample-btn').on('click', lambdaFunctionCallback);
+    $('#sample-btn').on('click', invokeCallback);
 });
 
 function invokeCallback() {
-	var input = $('sample-textbox').val();
+	resetAllDivs();
 	
-	if (input.length < 1) {
-		onError("Please enter a name in the textbox.");
+	var input = $('#sample-textbox').val();
+	
+	if (!isInt(input)) {
+		onError("Please enter an Integer value in the textbox.");
 	}
 	else {
+		//var json = createJson(input);
+		//lambdaFunctionCallback(json);
 		lambdaFunctionCallback(input);
 	}
 }
 
+function isInt(value) {
+	return !isNaN(value) && (function(x) { return (x | 0) === x; })(parseFloat(value))
+}
+
+/*
+function createJson(input) {
+	var dataJson = '{ "name": "' + input + '" }';
+	return dataJson;
+}*/
+
 function onBeforeSend() {
 	// Print what time request submitted
-	var $info = $('info');
-	$info.html('<p>Request submitted at: ' + new Date() + '</p>');
+	$('#info').html('<p>Request submitted at: ' + new Date() + '</p>');
 }
 
 function onSuccess(data) {
-	
+	$('#response').html(data);
 }
 
 function onComplete() {
 	// Print what time response received and Total time
-	var $info = $('info');
-	$info.append('<p>Response received at: ' + new Date() + '</p>');
+	$('#info').append('<p>Response received at: ' + new Date() + '</p>');
 }
 
 function onError(err) {
-	console.log("Terminal error: " + err);
-    $('err').html(err);
+    $('#err').html(err);
 }
 
+function resetAllDivs() {
+	$('#response').html('');
+	$('#info').html('');
+	$('#err').html('');
+}

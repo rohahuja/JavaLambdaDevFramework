@@ -16,25 +16,33 @@ $(document).ready(function () {
     AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
 });
 
-function lambdaFunctionCallback(input) {
-    var dataJson = "json=" + JSON.stringify("{ 'input': '" + input + "' }");
+function lambdaFunctionCallback(dataJson) {
+    //var dataJson = "json=" + JSON.stringify("{ 'name': '" + input + "' }");
     
     onBeforeSend();
     
 	var lambda = new AWS.Lambda();
     lambda.invoke({
-	        FunctionName: "LambdaFunctionHandlerWrapper",
+	        FunctionName: "SampleFunction",
 	        Payload: dataJson
 	    }, 
 	    function(err, data){
 	    	if (err == null) {
-	    		onSuccess();
+    			onSuccess(data.Payload);
+	    		/*}
+	    		else {
+	    			// Error source is an exception raised within the Lambda function
+	    			onError(data.error);
+	    		}*/
 	    	}
 	    	else {
+	    		// Error source is related to the invocation of the Lambda function
 	    		onError(err);
 	    	}
+	    	
+	    	onComplete();
 	    }
     );
     
-	onComplete();
+	
 }

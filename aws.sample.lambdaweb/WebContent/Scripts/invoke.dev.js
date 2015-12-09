@@ -3,7 +3,8 @@
  */
 
 function lambdaFunctionCallback(input) {
-    var dataJson = "json=" + JSON.stringify("{ 'input': '" + input + "' }");
+    //var dataJson = "json=" + JSON.stringify("{ 'name': '" + input + "' }");
+    var dataJson = 'param=' + input;
     
     //make the AJAX request, dataType is set to json
     //meaning we are expecting JSON data in response from the server
@@ -11,11 +12,17 @@ function lambdaFunctionCallback(input) {
         type: "POST",
         url: "LambdaFunctionHandlerWrapper",
         data: dataJson, 
-        dataType: "json",
+        dataType: "text", //"json",
 
         //if received a response from the server
         success: function (data, textStatus, jqXHR) {
-        	onSuccess();
+        	onSuccess(data);
+        	/*if (data.success) {
+        		onSuccess(data.itemInfo);
+        	} 
+        	else {
+        		onError(data.itemInfo);
+        	}*/
         },
 
         //If there was no response from the server

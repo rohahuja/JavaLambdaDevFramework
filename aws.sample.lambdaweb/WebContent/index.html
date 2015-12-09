@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Lambda-backed Web Application Sample</title>
 
 <!--  TODO: Fetch latest version, ie. reference an unversioned copy of the file like jquery.min.js? -->
 <script type="text/javascript"
@@ -12,18 +12,24 @@
 
 <script type="text/javascript" src="./Scripts/main.js"></script>
 
-<scripts type="text/javascript" src="./Scripts/invoke.js"></script> 
-<script type="text/javascript" src="./Scripts/invoke.dev.js"></script>
+<script type="text/javascript" src="./Scripts/invoke.js"></script> 
+<scripts type="text/javascript" src="./Scripts/invoke.dev.js"></script>
+
+<style>
+#response {color: blue; }
+#err { color: red; }
+</style>
 
 </head>
 <body>
 	<form id="ajax-request-form">
 		<div>
 			<label>Name: </label>
-			<input id="sample-textbox" type="text" />
+			<input id="sample-textbox" type="text" value="rohan" />
 		</div>
-		<input id="sample-btn" type="button" value="Click Me!" />
+		<input id="sample-btn" type="submit" value="Click Me!" />
 		
+		<div id="response"></div>
 		<div id="info"></div>
 		<div id="err"></div>
 	</form>

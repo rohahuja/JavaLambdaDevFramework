@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 	AWS.config.credentials = new AWS.Credentials(params);
 	
-    // Set the region your Lambda function has been deplyed to
+    // Set the region your Lambda function has been deployed to
     AWS.config.region = '';
 });
 
